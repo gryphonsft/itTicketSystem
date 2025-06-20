@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (TempData["Success"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Başarılı!',
+                text: '@TempData["Success"]',
+                confirmButtonText: 'Tamam',
+                timer: 3000,
+                timerProgressBar: true
+            });
+        </script>
+    }
+}
+<div class="d-flex " style="gap: 200px; margin-top: 50px; margin-left: 5rem;">
+
+    <div class="bg-primary-subtle p-4 shadow" style="width:400px; border-radius: 15px;">
+        <form asp-action="Create" asp-controller="Ticket" method="post" class="row g-4">
+
+            <div class="col-12">
+                <label for="Title" class="form-label">Ticket Başlığı</label>
+                <input type="text" class="form-control" id="Title" name="Title">
+            </div>
+
+            <div class="col-md-6">
+                <label for="Description" class="form-label">Açıklama</label>
+                <input type="text" class="form-control" id="Description" name="Description">
+            </div>
+
+            <div class="col-md-6">
+                <label for="Priority" class="form-label">Öncelik</label>
+                <select id="Priority" name="Priority" class="form-select">
+                    <option>Düşük</option>
+                    <option>Orta</option>
+                    <option>Yüksek</option>
+                </select>
+            </div>
+
+            <div class="col-12">
+                <label for="Category" class="form-label">Kategori</label>
+                <select id="Category" name="Category" class="form-select">
+                    <option>Donanım</option>
+                    <option>Yazılım</option>
+                </select>
+            </div>
+
+            <div class="col-12">
+                <label for="AssignedToUserId" class="form-label">Atanacak Kullanıcı</label>
+                <select id="AssignedToUserId" name="AssignedToUserId" class="form-select">
+                    <option value="">-- Seçiniz --</option>
+                    @foreach (var user in ViewBag.AssignedUsers)
+                    {
+                        <option value="@user.Value">@user.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Oluştur</button>
+            </div>
+        </form>
+
+    </div>
+</div>
