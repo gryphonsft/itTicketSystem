@@ -113,7 +113,7 @@ namespace itTicketSystem.Controllers
                 {
                     existing.closed_at = DateTime.Now;
                 }
-                else if (ticket.status == "Açık" && ticket.status == "Beklemede")
+                else if (ticket.status == "Açık" || ticket.status == "Beklemede")
                 {
                     existing.closed_at = null;
                 }
