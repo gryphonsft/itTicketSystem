@@ -16,6 +16,13 @@ namespace itTicketSystem.Controllers
             _context = context;
 
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Create(TicketsCreateDto dto)
         {
@@ -69,14 +76,54 @@ namespace itTicketSystem.Controllers
             ViewBag.Username = username;
 
 
-            var tickets = _context.Tickets
-            .Include(t => t.AssignedToUser)
-            .ToList();
+            var tickets = _context.Tickets.Include(t => t.Users)
+            .Include(t => t.AssignedToUser).ToList();
 
             return View(tickets);
         }
-        
-        
+
+        public IActionResult TicketModal(int id)
+        {
+            var ticket = _context.Tickets
+         .Include(t => t.Users)
+         .Include(t => t.AssignedToUser)
+         .FirstOrDefault(t => t.id == id);
+
+            if (ticket == null)
+                return NotFound();
+
+            return PartialView("_TicketModalPartial", ticket);
+
+
+        }
+
+        [HttpPost]
+        public IActionResult UpdateTicket(Tickets ticket)
+        {
+            var existing = _context.Tickets.FirstOrDefault(t => t.id == ticket.id);
+            if (existing != null)
+            {
+                existing.title = ticket.title;
+                existing.status = ticket.status;
+                existing.priority = ticket.priority;
+                existing.description = ticket.description;
+                existing.category = ticket.category;
+
+                if (ticket.status == "Kapalı" && existing.closed_at == null)
+                {
+                    existing.closed_at = DateTime.Now;
+                }
+                else if (ticket.status == "Açık" && ticket.status == "Beklemede")
+                {
+                    existing.closed_at = null;
+                }
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("PersonelTicket");
+        }
+
+
     }
 
 

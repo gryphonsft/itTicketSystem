@@ -1,13 +1,10 @@
 @model List<itTicketSystem.Models.Tickets>
 @section Styles {
-    <link rel="stylesheet" href="~/css/personelticket.css" />
+    <link rel="stylesheet" href="~/css/Personelticket.css" />
 }
 @section Scripts {
     <script src="~/js/toast.js"></script>
 }
-
-
-
 
 <div class="toast-container position-fixed end-0 p-3" style="z-index: 1080;">
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -18,50 +15,176 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
-           Bu sayfada Ticketları yönetebilirsiniz.
+            Bu sayfada Ticketları yönetebilirsiniz.
         </div>
     </div>
 </div>
 
 
 
-<div class="container" style="padding-top: 120px;">
-    <div class="table-wrapper" style="display: flex; justify-content: flex-end;">
-        <table class="table table-striped mb-0 ms-auto" style="width: 600px;">
 
-            <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
-                <tr>
-                    <th>Id</th>
-                    <th>Başlık</th>
-                    <th>Açıklama</th>
-                    <th>Durum</th>
-                    <th>Öncelik</th>
-                    <th>Kategori</th>
-                    <th>Atanan</th>
-                    <th>Oluşturulma</th>
-                    <th>Kapanma</th>
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var liste in Model)
-                {
+
+
+
+
+
+<div class="container" style="padding-top: 60px;">
+
+    <div class="flex-row" style="display: flex; justify-content: space-evenly; width: 100%;">
+
+        <div class="mainfilter" style="border-radius:15px; min-width: 380px; 
+        min-height: 400px; background-color: #212529;display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;">
+
+
+            <div class="title" style="margin-bottom: 30px;">
+
+                <h1 style="color: white;">FILTRELE <i class="fa-solid fa-filter"></i></h1>
+            </div>
+
+            <div class="card"
+                style="background-color: #171718; min-height: 100px; border-radius:15px; width: 90%; max-width: 100%; margin: 10px 0; padding: 10px;">
+
+
+                <div class="cardtitle" style="text-align: center;">
+                    <h1 style="color:white">Genel Kategoriler</h1>
+                </div>
+                <div class="cardbody my-2" style="display: flex; justify-content: space-around;">
+                    <button type="button" class="btn btn-primary">Donanım</button>
+                    <button type="button" class="btn btn-primary">Yazılım</button>
+                    <button type="button" class="btn btn-primary">İnternet</button>
+
+                </div>
+
+            </div>
+
+            <div class="card"
+                style="background-color: #171718; min-height: 100px; border-radius:15px; width: 90%; max-width: 100%; margin: 10px 0; padding: 10px;">
+
+
+                <div class="cardtitle" style="text-align: center;">
+                    <h1 style="color:white">Durum</h1>
+                </div>
+                <div class="cardbody my-2" style="display: flex; justify-content: space-around;">
+                    <button type="button" class="btn btn-primary">Açık</button>
+                    <button type="button" class="btn btn-primary">Kapalı</button>
+                    <button type="button" class="btn btn-primary">Beklemede</button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="table-wrapper" style="margin-left: auto; ">
+            <table class="table table-striped mb-0" style="min-width: 650px;">
+                <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
                     <tr>
-                        <td>@liste.id</td>
-                        <td>@liste.title</td>
-                        <td>@liste.description</td>
-                        <td>@liste.status</td>
-                        <td>@liste.priority</td>
-                        <td>@liste.category</td>
-                        <td>@liste.AssignedToUser?.Username</td>
-                        <td>@liste.created_at</td>
-                        <td>@liste.closed_at</td>
-
+                        <th>Id</th>
+                        <th>Başlık</th>
+                        <th>Açıklama</th>
+                        <th>Durum</th>
+                        <th>Öncelik</th>
+                        <th>Kategori</th>
+                        <th>Atanan</th>
+                        <th>Oluşturulma</th>
+                        <th>Kapanma</th>
+                        <th>İşlem yap</th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @foreach (var liste in Model)
+                    {
+                        <tr>
+                            <td>@liste.id</td>
+                            <td>@liste.title</td>
+                            <td>@liste.description</td>
+                            <td>@liste.status</td>
+                            <td>@liste.priority</td>
+                            <td>@liste.category</td>
+                            <td>@liste.AssignedToUser?.Username</td>
+                            <td>@liste.created_at</td>
+                            <td>@liste.closed_at</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary openModalBtn" data-id="@liste.id"
+                                    data-title="@liste.title" data-status="@liste.status" data-priority="@liste.priority"
+                                    data-category="@liste.category" data-description="@liste.description"
+                                    data-bs-toggle="modal" data-bs-target="#ticketModal">
+                                    İşlem Yap
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-
-            </tbody>
-        </table>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="ticketModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="/Ticket/UpdateTicket">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ticket Detayları ve Durum Güncelleme</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="ticketId" name="id" />
+
+                    <div class="mb-2">
+                        <label>Başlık</label>
+                        <input type="text" class="form-control" id="ticketTitle" name="title" readonly />
+                    </div>
+                    <div class="mb-2">
+                        <label>Açıklama</label>
+                        <textarea class="form-control" id="ticketDescription" rows="3" name="description" readonly></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label>Öncelik</label>
+                        <input type="text" class="form-control" id="ticketPriority" name="priority" readonly />
+                    </div>
+                    <div class="mb-2">
+                        <label>Kategori</label>
+                        <input type="text" class="form-control" id="ticketCategory" name="category" readonly />
+                    </div>
+                    <div class="mb-2">
+                        <label>Status</label>
+                        <select class="form-select" id="ticketStatus" name="status" required>
+                            <option value="">Seçiniz</option>
+                            <option value="Açık">Açık</option>
+                            <option value="Beklemede">Beklemede</option>                          
+                            <option value="Kapalı">Kapalı</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Durumu Güncelle</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.openModalBtn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('ticketId').value = btn.dataset.id;
+                document.getElementById('ticketTitle').value = btn.dataset.title || '';
+                document.getElementById('ticketDescription').value = btn.dataset.description || '';
+                document.getElementById('ticketPriority').value = btn.dataset.priority || '';
+                document.getElementById('ticketCategory').value = btn.dataset.category || '';
+                document.getElementById('ticketStatus').value = btn.dataset.status || '';
+            });
+        });
+    });
+</script>
