@@ -83,7 +83,7 @@ namespace itTicketSystem.Controllers
         }
 
 
-        [Authorize(Roles = "Kullanici")]
+        [Authorize(Roles = "Kullanıcı")]
         public IActionResult UserView()
         {
 

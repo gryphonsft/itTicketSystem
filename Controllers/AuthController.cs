@@ -62,7 +62,7 @@ public class AuthController : Controller
                     return RedirectToAction("AdminView", "Home");
                 case "Personel":
                     return RedirectToAction("PersonelView", "Home");
-                case "Kullanici":
+                case "Kullanıcı":
                     return RedirectToAction("UserView", "Home");
                 default:
                     return RedirectToAction("Login", "Auth");

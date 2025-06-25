@@ -6,7 +6,7 @@
     <script src="~/js/toast.js"></script>
 }
 
-<div class="toast-container position-fixed end-0 p-3" style="z-index: 1080;">
+<div class="toast-container position-fixed end-0 bottom-0 p-3" style="z-index: 1080;">
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <i class="fa-solid fa-question me-3"></i>
@@ -31,7 +31,7 @@
 
 <div class="container" style="padding-top: 60px;">
 
-    <div class="flex-row" style="display: flex; justify-content: space-evenly; width: 100%;">
+    <div class="flex-row" style="display: flex; justify-content: space-evenly; width: 100%; gap:60px;">
 
         <div class="mainfilter" style="border-radius:15px; min-width: 380px; 
         min-height: 400px; background-color: #212529;display: flex;
@@ -81,10 +81,11 @@
         </div>
 
         <div class="table-wrapper" style="margin-left: auto; ">
-            <table class="table table-striped mb-0" style="min-width: 650px;">
+            <table class="table table-striped mb-0" style="min-width: 600px; ">
                 <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
                     <tr>
                         <th>Id</th>
+                        <th>Ticket sahibi</th>
                         <th>Başlık</th>
                         <th>Açıklama</th>
                         <th>Durum</th>
@@ -101,6 +102,7 @@
                     {
                         <tr>
                             <td>@liste.id</td>
+                            <td>@liste.Users?.Username</td>
                             <td>@liste.title</td>
                             <td>@liste.description</td>
                             <td>@liste.status</td>
@@ -110,7 +112,8 @@
                             <td>@liste.created_at</td>
                             <td>@liste.closed_at</td>
                             <td>
-                                <button class="btn btn-sm btn-primary openModalBtn" data-id="@liste.id"
+                                <button class="btn btn-sm btn-primary openModalBtn" data-id="@liste.id" data-userid="@liste.user_id"
+                                    data-username="@liste.Users?.Username"
                                     data-title="@liste.title" data-status="@liste.status" data-priority="@liste.priority"
                                     data-category="@liste.category" data-description="@liste.description"
                                     data-bs-toggle="modal" data-bs-target="#ticketModal">
@@ -136,9 +139,15 @@
                     <h5 class="modal-title">Ticket Detayları ve Durum Güncelleme</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+
                 <div class="modal-body">
                     <input type="hidden" id="ticketId" name="id" />
 
+                    <input type="hidden" id="ticketUserId" name="user_id" />
+                    <div class="mb-2">
+                        <label>Ticket Sahibi</label>
+                        <input type="text" class="form-control" id="ticketUsername" readonly />
+                    </div>
                     <div class="mb-2">
                         <label>Başlık</label>
                         <input type="text" class="form-control" id="ticketTitle" name="title" readonly />
@@ -160,11 +169,12 @@
                         <select class="form-select" id="ticketStatus" name="status" required>
                             <option value="">Seçiniz</option>
                             <option value="Açık">Açık</option>
-                            <option value="Beklemede">Beklemede</option>                          
+                            <option value="Beklemede">Beklemede</option>
                             <option value="Kapalı">Kapalı</option>
                         </select>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Durumu Güncelle</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
@@ -174,11 +184,14 @@
     </div>
 </div>
 
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.openModalBtn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.getElementById('ticketId').value = btn.dataset.id;
+                document.getElementById('ticketUserId').value = btn.dataset.userid ||'';
+                document.getElementById('ticketUsername').value = btn.dataset.username ||'';
                 document.getElementById('ticketTitle').value = btn.dataset.title || '';
                 document.getElementById('ticketDescription').value = btn.dataset.description || '';
                 document.getElementById('ticketPriority').value = btn.dataset.priority || '';

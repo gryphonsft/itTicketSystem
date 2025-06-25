@@ -56,7 +56,7 @@ namespace itTicketSystem.Controllers
                     return RedirectToAction("AdminView", "Home");
                 case "Personel":
                     return RedirectToAction("PersonelPanel", "Home");
-                case "Kullanici":
+                case "Kullanıcı":
                     return RedirectToAction("UserView", "Home");
                 default:
                     return RedirectToAction("Login", "Auth");
@@ -82,32 +82,18 @@ namespace itTicketSystem.Controllers
             return View(tickets);
         }
 
-        public IActionResult TicketModal(int id)
-        {
-            var ticket = _context.Tickets
-         .Include(t => t.Users)
-         .Include(t => t.AssignedToUser)
-         .FirstOrDefault(t => t.id == id);
 
-            if (ticket == null)
-                return NotFound();
-
-            return PartialView("_TicketModalPartial", ticket);
-
-
-        }
 
         [HttpPost]
         public IActionResult UpdateTicket(Tickets ticket)
         {
             var existing = _context.Tickets.FirstOrDefault(t => t.id == ticket.id);
+
             if (existing != null)
             {
-                existing.title = ticket.title;
+
+                existing.user_id = ticket.user_id;
                 existing.status = ticket.status;
-                existing.priority = ticket.priority;
-                existing.description = ticket.description;
-                existing.category = ticket.category;
 
                 if (ticket.status == "Kapalı" && existing.closed_at == null)
                 {
