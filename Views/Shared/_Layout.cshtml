@@ -11,12 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - itTicketSystem</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+   
 
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/itTicketSystem.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/tailwindcss/tailwind.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css">
-      @RenderSection("Styles", required: false)
+
+    @RenderSection("Styles", required: false)
 
 </head>
 
@@ -41,8 +42,10 @@
                         </a>
                         @if (userRole == "Admin")
                         {
-                            <a class=" nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="PersonelTicket">Ticketlar</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SettingsView">Ayarlar</a>
+                            <a class=" nav-link text-dark" asp-area="" asp-controller="Ticket"
+                                asp-action="PersonelTicket">Ticketlar</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="SettingsView">Ayarlar</a>
                         }
                         else if (userRole == "User")
                         {
@@ -50,7 +53,8 @@
                         }
                         else if (userRole == "Personel")
                         {
-                            <a class=" nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="PersonelTicket">Ticketlar</a>
+                            <a class=" nav-link text-dark" asp-area="" asp-controller="Ticket"
+                                asp-action="PersonelTicket">Ticket işlemleri</a>
 
                         }
 
@@ -89,7 +93,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/sweetalert/sweetalert.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
+   
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

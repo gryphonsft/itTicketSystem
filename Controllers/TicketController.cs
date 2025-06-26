@@ -55,7 +55,7 @@ namespace itTicketSystem.Controllers
                 case "Admin":
                     return RedirectToAction("AdminView", "Home");
                 case "Personel":
-                    return RedirectToAction("PersonelPanel", "Home");
+                    return RedirectToAction("PersonelView", "Home");
                 case "Kullanıcı":
                     return RedirectToAction("UserView", "Home");
                 default:
