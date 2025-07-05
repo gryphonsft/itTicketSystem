@@ -53,10 +53,21 @@
                     <h1 style="color:white">Genel Kategoriler</h1>
                 </div>
                 <div class="cardbody my-2" style="display: flex; justify-content: space-around;">
-                    <button type="button" class="btn btn-primary">Donanım</button>
-                    <button type="button" class="btn btn-primary">Yazılım</button>
-                    <button type="button" class="btn btn-primary">İnternet</button>
 
+                <form method="get" asp-controller="Ticket" asp-action="Index">
+                    <input type="hidden" name="category" value="Donanım" />
+                    <button type="submit" class="btn btn-primary">Donanım</button>
+                </form>
+                
+                <form method="get" asp-controller="Ticket" asp-action="Index">
+                    <input type="hidden" name="category" value="Yazılım" />
+                    <button type="submit" class="btn btn-primary">Yazılım</button>
+                </form>
+                
+                <form method="get" asp-controller="Ticket" asp-action="Index">
+                    <input type="hidden" name="category" value="İnternet" />
+                    <button type="submit" class="btn btn-primary">İnternet</button>
+                </form>
                 </div>
 
             </div>
@@ -127,10 +138,7 @@
             </table>
         </div>
 </div>
-      @*
       
-      burası
-      *@
 
     </div>
 </div>
@@ -174,8 +182,7 @@
                         <label>Status</label>
                         <select class="form-select" id="ticketStatus" name="status" required>
                             <option value="">Seçiniz</option>
-                            <option value="Açık">Açık</option>
-                            <option value="Beklemede">Beklemede</option>
+                            <option value="Açık">Açık</option>                            
                             <option value="Kapalı">Kapalı</option>
                         </select>
                     </div>
@@ -206,4 +213,6 @@
             });
         });
     });
+
+    
 </script>

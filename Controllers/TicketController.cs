@@ -17,9 +17,23 @@ namespace itTicketSystem.Controllers
 
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(string category)
         {
-            return View();
+            List<Tickets> tickets;
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                tickets = _context.Tickets.Where(t => t.category == category)
+                .ToList();
+
+            }
+            else
+            {
+                tickets = _context.Tickets.ToList();
+            }
+
+            return View(tickets);
         }
 
 
@@ -41,7 +55,7 @@ namespace itTicketSystem.Controllers
 
 
                 user_id = HttpContext.Session.GetInt32("Id") ?? 0,
-                status = null,
+                status = "Beklemede",
                 created_at = DateTime.Now,
                 closed_at = null
             };
@@ -74,7 +88,7 @@ namespace itTicketSystem.Controllers
             ViewBag.Id = id;
             ViewBag.Role = rol;
             ViewBag.Username = username;
-
+    
 
             var tickets = _context.Tickets.Include(t => t.Users)
             .Include(t => t.AssignedToUser).ToList();
@@ -108,6 +122,8 @@ namespace itTicketSystem.Controllers
 
             return RedirectToAction("PersonelTicket");
         }
+
+
 
 
     }
