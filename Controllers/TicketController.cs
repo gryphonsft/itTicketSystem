@@ -63,7 +63,7 @@ namespace itTicketSystem.Controllers
 
 
         [Authorize(Roles = "Admin,Personel")]
-        public IActionResult PersonelTicket(string category)
+        public IActionResult PersonelTicket(string category, string status)
         {
             var id = HttpContext.Session.GetInt32("Id");
             var username = HttpContext.Session.GetString("username");
@@ -76,22 +76,33 @@ namespace itTicketSystem.Controllers
             List<Tickets> tickets;
             if (!string.IsNullOrEmpty(category))
             {
-                tickets = _context.Tickets
+
+            tickets = _context.Tickets
             .Include(t => t.Users)
             .Include(t => t.AssignedToUser)
             .Where(t => t.category == category)
             .ToList();
+
+            }
+            else if (!string.IsNullOrEmpty(status))
+            {
+                
+            tickets = _context.Tickets
+            .Include(t => t.Users)
+            .Include(t => t.AssignedToUser)
+            .Where(t => t.status == status)
+            .ToList();
+
             }
             else
             {
-                tickets = _context.Tickets
+                
+            tickets = _context.Tickets
             .Include(t => t.Users)
             .Include(t => t.AssignedToUser)
             .ToList();
+
             }
-
-
-
             return View(tickets);
         }
 
