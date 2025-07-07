@@ -17,24 +17,8 @@ namespace itTicketSystem.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult Index(string category)
-        {
-            List<Tickets> tickets;
 
-            if (!string.IsNullOrEmpty(category))
-            {
-                tickets = _context.Tickets.Where(t => t.category == category)
-                .ToList();
 
-            }
-            else
-            {
-                tickets = _context.Tickets.ToList();
-            }
-
-            return View(tickets);
-        }
 
 
         [HttpPost]
@@ -79,7 +63,7 @@ namespace itTicketSystem.Controllers
 
 
         [Authorize(Roles = "Admin,Personel")]
-        public IActionResult PersonelTicket()
+        public IActionResult PersonelTicket(string category)
         {
             var id = HttpContext.Session.GetInt32("Id");
             var username = HttpContext.Session.GetString("username");
@@ -88,10 +72,25 @@ namespace itTicketSystem.Controllers
             ViewBag.Id = id;
             ViewBag.Role = rol;
             ViewBag.Username = username;
-    
 
-            var tickets = _context.Tickets.Include(t => t.Users)
-            .Include(t => t.AssignedToUser).ToList();
+            List<Tickets> tickets;
+            if (!string.IsNullOrEmpty(category))
+            {
+                tickets = _context.Tickets
+            .Include(t => t.Users)
+            .Include(t => t.AssignedToUser)
+            .Where(t => t.category == category)
+            .ToList();
+            }
+            else
+            {
+                tickets = _context.Tickets
+            .Include(t => t.Users)
+            .Include(t => t.AssignedToUser)
+            .ToList();
+            }
+
+
 
             return View(tickets);
         }
