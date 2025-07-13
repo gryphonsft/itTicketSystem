@@ -11,6 +11,6 @@ namespace itTicketSystem.Models
 
         public ICollection<Tickets>? CreatedTickets { get; set; }
         public ICollection<Tickets>? AssignedTickets { get; set; }
-        public ICollection<Device_Assignment>? Device_Assignments { get; set; }      
+        public ICollection<User_Devices>? User_Devices { get; set; }      
     }
 }

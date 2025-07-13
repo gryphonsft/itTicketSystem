@@ -12,8 +12,8 @@ namespace itTicketSystem.Models
         public DbSet<Users> Users { get; set; }
         public DbSet<Roles> Roles { get; set; }
         public DbSet<Tickets> Tickets { get; set; }
-        public DbSet<Device_Inventory> Device_Inventory { get; set; }
-        public DbSet<Device_Assignment> Device_Assignments { get; set; }
+        public DbSet<Devices> Devices { get; set; }
+        public DbSet<User_Devices> User_Devices { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,20 +36,40 @@ namespace itTicketSystem.Models
                 .HasForeignKey(t => t.assigned_to_user_id)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Device_Assignment>()
-                .HasOne(da => da.Device_Inventory)
-                .WithMany(d => d.Device_Assignments)
-                .HasForeignKey(da => da.device_id)
+            modelBuilder.Entity<Devices>()
+          .HasKey(d => d.DeviceId);
+
+
+            modelBuilder.Entity<User_Devices>()
+                .HasKey(ud => ud.UserDeviceId);
+
+            modelBuilder.Entity<User_Devices>()
+                .HasOne(ud => ud.Users)
+                .WithMany(u => u.User_Devices)
+                .HasForeignKey(ud => ud.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Device_Assignment>()
-                .HasOne(da => da.Users)
-                .WithMany(u => u.Device_Assignments)
-                .HasForeignKey(da => da.user_id)
+            modelBuilder.Entity<User_Devices>()
+                .HasOne(ud => ud.Devices)
+                .WithMany(d => d.User_Devices)
+                .HasForeignKey(ud => ud.DeviceId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+
+            modelBuilder.Entity<Devices>()
+                .Property(d => d.CreatedAt)
+                .HasDefaultValueSql("GETDATE()");
+
+            modelBuilder.Entity<Devices>()
+                .Property(d => d.UpdatedAt)
+                .HasDefaultValueSql("GETDATE()");
+
+            modelBuilder.Entity<User_Devices>()
+                .Property(ud => ud.AssignedAt)
+                .HasDefaultValueSql("GETDATE()");
         }
 
     }
 
 }
+
