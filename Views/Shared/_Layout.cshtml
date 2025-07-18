@@ -1,6 +1,4 @@
 ﻿@{
-    //Navbar butonlarının yönlendirmesi için rol verisi alınıyor.
-    //Alınan rol verisine göre, butonların action'ı değişiyor.
     var userRole = Context.Session.GetString("role");
 }
 <!DOCTYPE html>
@@ -28,8 +26,8 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
-            <div class="container mx-auto bg-white rounded-3xl" style="max-width: 1000px;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home"
                     asp-action="@(userRole == "Admin" ? "AdminView" : userRole == "Personel" ? "PersonelView" : "UserView")">
                     itTicketSystem
