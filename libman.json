@@ -21,6 +21,10 @@
     {
       "library": "admin-lte@3.2.0",
       "destination": "wwwroot/lib/adminlte"
+    },
+    {
+      "library": "daisyui@5.0.46",
+      "destination": "wwwroot/lib/daisyui"
     }
   ]
 }

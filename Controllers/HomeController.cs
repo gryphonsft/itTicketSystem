@@ -130,6 +130,18 @@ namespace itTicketSystem.Controllers
 
             return View();
         }
+        [HttpGet]
+        public IActionResult About()
+        {
+            var id = HttpContext.Session.GetInt32("Id");
+            var username = HttpContext.Session.GetString("username");
+            var rol = HttpContext.Session.GetString("role");
+
+            ViewBag.Id = id;
+            ViewBag.Role = rol;
+            ViewBag.Username = username;
+            return View();
+        }
 
         public IActionResult Privacy()
         {
