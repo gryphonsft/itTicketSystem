@@ -11,11 +11,7 @@ namespace itTicketSystem.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Device_Assignments");
-
-            migrationBuilder.DropTable(
-                name: "Device_Inventory");
+           
 
             migrationBuilder.CreateTable(
                 name: "Devices",
