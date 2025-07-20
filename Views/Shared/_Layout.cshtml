@@ -18,16 +18,24 @@
 
     <style>
         body {
-            background-color: rgb(223, 221, 221);
+            background-color: #212529;
         }
+
+        .navbar {
+            background-color: #6e2cf4;
+            height: 80px;
+            font-size: 20px;
+        }
+
+        footer {}
     </style>
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home"
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm   mb-3">
+            <div class="container-fluid" style="margin-left: 4rem;">
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home"
                     asp-action="@(userRole == "Admin" ? "AdminView" : userRole == "Personel" ? "PersonelView" : "UserView")">
                     itTicketSystem
                 </a>
@@ -38,28 +46,28 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                        <a class="nav-link text-white ml-4" asp-area="" asp-controller="Home"
                             asp-action="@(userRole == "Admin" ? "AdminView" : userRole == "Personel" ? "PersonelView" : "UserView")">
                             Ana Sayfa
                         </a>
                         @if (userRole == "Admin")
                         {
-                            <a class=" nav-link text-dark" asp-area="" asp-controller="Ticket"
+                            <a class=" nav-link text-white" asp-area="" asp-controller="Ticket"
                                 asp-action="PersonelTicket">Ticketlar</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Inventory"
+                            <a class="nav-link text-white" asp-area="" asp-controller="Inventory"
                                 asp-action="Index">Envanter</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">Hakkında</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home"
                                 asp-action="SettingsView">Ayarlar</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Hakkında</a>
 
                         }
                         else if (userRole == "User")
                         {
-                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Ticketlarım</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="" asp-action="">Ticketlarım</a>
                         }
                         else if (userRole == "Personel")
                         {
-                            <a class=" nav-link text-dark" asp-area="" asp-controller="Ticket"
+                            <a class=" nav-link text-white" asp-area="" asp-controller="Ticket"
                                 asp-action="PersonelTicket">Ticket işlemleri</a>
 
 
@@ -67,12 +75,14 @@
 
                         </li>
 
-                        <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-danger">Çıkış yap</button>
-                        </form>
+
 
                     </ul>
-                    <div class="ms-auto">
+                    <form asp-controller="Auth" asp-action="Logout" method="post"
+                        style="display:inline; margin-right: 1rem;">
+                        <button type="submit" class="btn btn-danger">Çıkış yap</button>
+                    </form>
+                    <div class="ms-auto text-white">
 
                         <span class="navbar-text">Hoş geldin, @ViewBag.Username</span>
                         <br>
@@ -92,7 +102,7 @@
 
     </div>
 
-    <footer class="bg-white border-top footer text-muted">
+    <footer class=" footer text-muted">
         <div class="container">
             &copy; 2025 - itTicketSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
