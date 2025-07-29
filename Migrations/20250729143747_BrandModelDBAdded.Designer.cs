@@ -12,8 +12,8 @@ using itTicketSystem.Models;
 namespace itTicketSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250728212936_BrandModelSelectDB")]
-    partial class BrandModelSelectDB
+    [Migration("20250729143747_BrandModelDBAdded")]
+    partial class BrandModelDBAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,7 +75,7 @@ namespace itTicketSystem.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
