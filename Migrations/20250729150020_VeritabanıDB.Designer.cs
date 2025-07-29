@@ -12,8 +12,8 @@ using itTicketSystem.Models;
 namespace itTicketSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250606123148_updatedmodel")]
-    partial class updatedmodel
+    [Migration("20250729150020_VeritabanıDB")]
+    partial class VeritabanıDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,66 @@ namespace itTicketSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("itTicketSystem.Models.BrandModelSelectDB", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeviceType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("BrandModelSelectDB");
+                });
+
+            modelBuilder.Entity("itTicketSystem.Models.Devices", b =>
+                {
+                    b.Property<int>("DeviceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeviceId"));
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("DeviceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeviceType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.HasKey("DeviceId");
+
+                    b.ToTable("Devices");
+                });
+
             modelBuilder.Entity("itTicketSystem.Models.Roles", b =>
                 {
                     b.Property<int>("RoleId")
@@ -34,7 +94,6 @@ namespace itTicketSystem.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
 
                     b.Property<string>("RoleName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RoleId");
@@ -54,7 +113,6 @@ namespace itTicketSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("category")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("closed_at")
@@ -64,18 +122,15 @@ namespace itTicketSystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("priority")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("status")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("user_id")
@@ -90,6 +145,40 @@ namespace itTicketSystem.Migrations
                     b.ToTable("Tickets");
                 });
 
+            modelBuilder.Entity("itTicketSystem.Models.User_Devices", b =>
+                {
+                    b.Property<int>("UserDeviceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserDeviceId"));
+
+                    b.Property<DateTime>("AssignedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCurrentlyAssigned")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UnassignedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserDeviceId");
+
+                    b.HasIndex("DeviceId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("User_Devices");
+                });
+
             modelBuilder.Entity("itTicketSystem.Models.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -99,14 +188,12 @@ namespace itTicketSystem.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -135,6 +222,25 @@ namespace itTicketSystem.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("itTicketSystem.Models.User_Devices", b =>
+                {
+                    b.HasOne("itTicketSystem.Models.Devices", "Devices")
+                        .WithMany("User_Devices")
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("itTicketSystem.Models.Users", "Users")
+                        .WithMany("User_Devices")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Devices");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("itTicketSystem.Models.Users", b =>
                 {
                     b.HasOne("itTicketSystem.Models.Roles", "Roles")
@@ -144,6 +250,11 @@ namespace itTicketSystem.Migrations
                         .IsRequired();
 
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("itTicketSystem.Models.Devices", b =>
+                {
+                    b.Navigation("User_Devices");
                 });
 
             modelBuilder.Entity("itTicketSystem.Models.Roles", b =>
@@ -156,6 +267,8 @@ namespace itTicketSystem.Migrations
                     b.Navigation("AssignedTickets");
 
                     b.Navigation("CreatedTickets");
+
+                    b.Navigation("User_Devices");
                 });
 #pragma warning restore 612, 618
         }
