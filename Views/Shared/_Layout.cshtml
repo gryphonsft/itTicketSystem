@@ -8,26 +8,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - itTicketSystem</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/itTicketSystem.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/tailwindcss/tailwind.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="~/css/site.css">
+
+
 
 
     @RenderSection("Styles", required: false)
 
     <style>
         body {
-            background-color: #212529;
+            background-color: rgb(44, 44, 44);
         }
 
         .navbar {
-            background-color: #6e2cf4;
+            background-color: #272727;
             height: 80px;
             font-size: 20px;
         }
 
-        footer {}
     </style>
 </head>
 
@@ -46,16 +49,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 
-                        <a class="nav-link text-white ml-4" asp-area="" asp-controller="Home"
+                        <a class="nav-link text-white ml-8" asp-area="" asp-controller="Home"
                             asp-action="@(userRole == "Admin" ? "AdminView" : userRole == "Personel" ? "PersonelView" : "UserView")">
-                            Ana Sayfa
+                            <i class="fa-solid fa-house"></i>
                         </a>
                         @if (userRole == "Admin")
                         {
                             <a class=" nav-link text-white" asp-area="" asp-controller="Ticket"
-                                asp-action="PersonelTicket">Ticketlar</a>
+                                asp-action="PersonelTicket">Ticket Yönetimi</a>
                             <a class="nav-link text-white" asp-area="" asp-controller="Inventory"
-                                asp-action="Index">Envanter</a>
+                                asp-action="Index">Envanter Yönetimi</a>
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">Hakkında</a>
                             <a class="nav-link text-white" asp-area="" asp-controller="Home"
                                 asp-action="SettingsView">Ayarlar</a>
@@ -102,9 +105,9 @@
 
     </div>
 
-    <footer class=" footer text-muted">
-        <div class="container">
-            &copy; 2025 - itTicketSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer text-muted">
+        <div class="container flex flex-col items-center justify-center text-center">
+            itTicketSystem
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

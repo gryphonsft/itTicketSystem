@@ -11,7 +11,7 @@ namespace itTicketSystem.Models
         public string? Model { get; set; }
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public DateTime? UpdatedAt { get; set; } 
 
         
         public ICollection<User_Devices>? User_Devices { get; set; }

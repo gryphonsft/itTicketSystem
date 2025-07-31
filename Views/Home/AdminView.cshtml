@@ -20,11 +20,14 @@
     }
 }
 
-<div style="max-width: 1800px; margin-left: 2rem;">
-    <div class="d-flex flex-wrap" style="gap: 20px; margin-top: 100px; align-items: flex-start;">
+<div style="max-width: 1800px;  margin-left: 2rem;">
+    <div class="d-flex flex-wrap"
+        style="gap: 25px; margin-top: 50px; align-items: flex-start; justify-content: space-between;">
+
+
 
         <!-- Kartlar -->
-        <div class="flex flex-col gap-4" style="margin-top: 90px; min-width: 200px;">
+        <div class="flex flex-col gap-4" style="margin-top: 90px; flex: 0 0 180px; min-width: 180px;">
 
 
             <div class="bg-green-500 text-white p-4 rounded-lg shadow-md flex items-center justify-between"
@@ -56,41 +59,62 @@
         </div>
 
         <!-- Form -->
-        <div class="bg-white bg-primary-subtle p-3 shadow" style="width: 300px; height: 460px; border-radius: 15px; overflow: hidden;">
-            <form method="post" asp-action="Create" asp-controller="Ticket">
-                <div class="mb-1">
-                    <label for="Title" class="form-label">Ticket Başlığı</label>
-                    <input type="text" class="form-control" id="Title" name="Title" required>
+
+        <div class="p-3 bg-white rounded-2xl shadow-lg ml-3"
+            style="flex: 1 1 320px; max-width: 400px; min-width: 300px;">
+
+
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">🎫 Yeni Ticket Oluştur</h2>
+            <form method="post" asp-action="Create" asp-controller="Ticket" class="space-y-5">
+
+                <!-- Başlık -->
+                <div>
+                    <label class="block text-gray-700 font-medium ">Ticket Başlığı</label>
+                    <input type="text" name="Title" id="Title"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required />
                 </div>
 
-                <div class="mb-1">
-                    <label for="Description" class="form-label">Açıklama</label>
-                    <input type="text" class="form-control" id="Description" name="Description" required>
+                <!-- Açıklama -->
+                <div>
+                    <label class="block text-gray-700 font-medium">Açıklama</label>
+                    <input type="text" id="Description" name="Description"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required />
                 </div>
 
-                <div class="mb-1">
-                    <label for="Priority" class="form-label">Öncelik</label>
-                    <select id="Priority" name="Priority" class="form-select">
-                        <option>Düşük</option>
-                        <option>Orta</option>
-                        <option>Yüksek</option>
+                <!-- Öncelik -->
+                <div>
+                    <label class="block text-gray-700 font-medium ">Öncelik</label>
+                    <select name="Priority"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required>
+                        <option value="">Seçiniz</option>
+                        <option value="Düşük">Düşük</option>
+                        <option value="Orta">Orta</option>
+                        <option value="Yüksek">Yüksek</option>
                     </select>
                 </div>
 
-                <div class="mb-1">
-                    <label for="Category" class="form-label">Kategori</label>
-                    <select id="Category" name="Category" class="form-select">
+                <!-- Cihaz Seçimi -->
+                <div>
+                    <label class="block text-gray-700 font-medium">Kategori</label>
+                    <select id="Category" name="Category"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option>Donanım</option>
                         <option>Yazılım</option>
                         <option>İnternet</option>
+
                     </select>
                 </div>
-
-                <div class="mb-3">
+                <div>
                     @if (ViewBag.AssignedUsers != null)
                     {
-                        <label for="AssignedToUserId" class="form-label">Atanacak Kullanıcı</label>
-                        <select id="AssignedToUserId" name="AssignedToUserId" class="form-select" required>
+                        <label for="AssignedToUserId" class="block text-gray-700 font-medium">Atanacak Kullanıcı</label>
+                        <select id="AssignedToUserId" name="AssignedToUserId"
+                            class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
                             <option value="">-- Seçiniz --</option>
                             @foreach (var user in ViewBag.AssignedUsers)
                             {
@@ -110,63 +134,102 @@
             </form>
         </div>
 
-        <!-- Tablo -->
-        <div class="bg-white bg-primary-subtle shadow p-3 flex-grow-1" style="border-radius: 15px; width: 400px;">
-            <div class="row">
-                <div class="col-12">
-                    <h1 class="text-center p-1 rounded">Ticket Listesi</h1>
-                </div>
-                <div class="col-12">
-                    <div style="max-height: 400px; overflow-y: auto; border-radius: 10px;">
-                        <table class="table table-striped mb-0" style="font-size:12px;">
-                            <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
+       
+    </div>
+
+
+    <!-- Tablo -->
+    <div class="bg-white bg-primary-subtle shadow p-3" style="flex: 2 1 600px; min-width: 600px;">
+
+
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center p-1 rounded">Ticket Listesi</h1>
+            </div>
+            <div class="col-12">
+                <div style="max-height: 500px; overflow-y: auto; border-radius: 10px;">
+                    <table class="table table-striped mb-0" style="font-size:12px;">
+                        <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
+                            <tr>
+                                <th>Id</th>
+                                <th>Başlık</th>
+                                <th>Açıklama</th>
+                                <th>Durum</th>
+                                <th>Öncelik</th>
+                                <th>Kategori</th>
+                                <th>Atanan</th>
+                                <th>Oluşturulma</th>
+                                <th>Kapanma</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var liste in Model)
+                            {
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Başlık</th>
-                                    <th>Açıklama</th>
-                                    <th>Durum</th>
-                                    <th>Öncelik</th>
-                                    <th>Kategori</th>
-                                    <th>Atanan</th>
-                                    <th>Oluşturulma</th>
-                                    <th>Kapanma</th>
+                                    <td>@liste.id</td>
+                                    <td>@liste.title</td>
+                                    <td>@liste.description</td>
+                                    <td>@liste.status</td>
+                                    <td>@liste.priority</td>
+                                    <td>@liste.category</td>
+                                    <td>@liste.AssignedToUser?.Username</td>
+                                    <td>@liste.created_at</td>
+                                    <td>@liste.closed_at</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var liste in Model)
-                                {
-                                    <tr>
-                                        <td>@liste.id</td>
-                                        <td>@liste.title</td>
-                                        <td>@liste.description</td>
-                                        <td>@liste.status</td>
-                                        <td>@liste.priority</td>
-                                        <td>@liste.category</td>
-                                        <td>@liste.AssignedToUser?.Username</td>
-                                        <td>@liste.created_at</td>
-                                        <td>@liste.closed_at</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <!-- Info-Card -->
-    <div class="bg-white text-dark p-4 shadow rounded-lg d-flex flex-column justify-content-between"
-     style="max-width: 250px; height: 460px;">
-    <div>
-        <h5 class="fw-bold mb-2">Bilgilendirme</h5>
-        <p style="font-size: 20px;">
-            Bu panel üzerinden yeni destek talepleri oluşturabilir, mevcut taleplerin durumlarını izleyebilirsiniz.
-        </p>
     </div>
-    <div class="mt-auto">
-        <i class="fas fa-info-circle fa-2x"></i>
-    </div>
-</div>
+    <<<<<<< HEAD <!-- Info-Card -->
+        <div class="bg-white text-dark p-4 shadow rounded-lg d-flex flex-column justify-content-between"
+            style="max-width: 250px; height: 460px;">
+            <div>
+                <h5 class="fw-bold mb-2">Bilgilendirme</h5>
+                <p style="font-size: 20px;">
+                    Bu panel üzerinden yeni destek talepleri oluşturabilir, mevcut taleplerin durumlarını
+                    izleyebilirsiniz.
+                </p>
+            </div>
+            <div class="mt-auto">
+                <i class="fas fa-info-circle fa-2x"></i>
+            </div>
+        </div>
+        =======
 
+        <div class="d-flex flex-column mr-2" style="gap: 10px; flex: 0 0 200px; min-width: 200px;">
+            >>>>>>> main
 
-    </div>
+            <div class="bg-white text-dark text-lg p-2 shadow rounded-lg mt-3" style="max-height: 250px; ">
+                <div>
+
+                    <p style="font-size: 20px;">
+                        Bu panel üzerinden yeni destek talepleri oluşturabilir, mevcut taleplerin durumlarını
+                        izleyebilirsiniz.
+                    </p>
+                </div>
+                <div class="mt-auto">
+                    <i class="fas fa-info-circle fa-2x"></i>
+                </div>
+            </div>
+
+            <div class="bg-white text-dark text-lg p-2 shadow rounded-lg mt-3" style="max-height: 250px; ">
+                <div>
+                    <h5 class="fw-bold mb-2">Bilgilendirme</h5>
+                    <p style="font-size: 20px;">
+                        Bu panel üzerinden yeni destek talepleri oluşturabilir, mevcut taleplerin durumlarını
+                        izleyebilirsiniz.
+                    </p>
+                </div>
+                <div class="mt-auto">
+                    <i class="fas fa-info-circle fa-2x"></i>
+                </div>
+            </div>
+        </div>
 </div>
+<<<<<<< HEAD </div>
+    =======
+</div>
+    >>>>>>> main

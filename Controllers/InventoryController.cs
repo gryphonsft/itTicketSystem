@@ -19,7 +19,48 @@ namespace itTicketSystem.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var id = HttpContext.Session.GetInt32("Id");
+            var username = HttpContext.Session.GetString("username");
+            var rol = HttpContext.Session.GetString("role");
+
+            ViewBag.Id = id;
+            ViewBag.Role = rol;
+            ViewBag.Username = username;
+
+            var BrandModelSelectDB = _context.BrandModelSelectDB.ToList();
+
+            return View(BrandModelSelectDB);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeviceCreate(Devices devices)
+        {
+            var role = HttpContext.Session.GetString("role");
+
+            var devi = new Devices
+            {
+                DeviceName = devices.DeviceName,  
+                DeviceType = devices.DeviceType,
+                Brand = devices.Brand,
+                Model = devices.Model,
+
+                IsActive = devices.IsActive,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = null
+            };
+            _context.Devices.Add(devi);
+            await _context.SaveChangesAsync();
+            TempData["Success"] = "Cihaz başarıyla eklendi!";
+
+            switch (role)
+            {
+                case "Admin":
+                    return RedirectToAction("Index", "Inventory");
+                default:
+                    return RedirectToAction("Login", "Auth");
+            }
+
+
+
         }
     }
 }

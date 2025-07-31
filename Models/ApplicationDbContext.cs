@@ -14,6 +14,7 @@ namespace itTicketSystem.Models
         public DbSet<Tickets> Tickets { get; set; }
         public DbSet<Devices> Devices { get; set; }
         public DbSet<User_Devices> User_Devices { get; set; }
+        public DbSet<BrandModelSelectDB> BrandModelSelectDB { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
