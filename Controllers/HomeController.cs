@@ -34,6 +34,7 @@ namespace itTicketSystem.Controllers
 
             var tickets = _context.Tickets
             .Include(t => t.AssignedToUser)
+            .OrderByDescending(t => t.created_at)
             .ToList();
 
             //Hali hazırdaki session'ı yakalayıp viewbag olarak view sayfasına gönderme.
@@ -98,14 +99,18 @@ namespace itTicketSystem.Controllers
 
             ViewBag.AssignedUsers = assignedUsers;
 
-            var tickets = _context.Tickets
-            .Include(t => t.AssignedToUser)
-            .ToList();
-
             //Hali hazırdaki session'ı yakalayıp viewbag olarak view sayfasına gönderme.
             var id = HttpContext.Session.GetInt32("Id");
             var username = HttpContext.Session.GetString("username");
             var rol = HttpContext.Session.GetString("role");
+
+
+            var tickets = _context.Tickets
+            .Include(t => t.AssignedToUser)
+            .Where(t => t.user_id == id)
+            .OrderByDescending(t => t.created_at)
+            .ToList();
+
 
             ViewBag.Id = id;
             ViewBag.Role = rol;
