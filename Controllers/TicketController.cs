@@ -80,6 +80,7 @@ namespace itTicketSystem.Controllers
             tickets = _context.Tickets
             .Include(t => t.Users)
             .Include(t => t.AssignedToUser)
+            .OrderByDescending(t => t.created_at)
             .Where(t => t.category == category)
             .ToList();
 
@@ -90,6 +91,7 @@ namespace itTicketSystem.Controllers
             tickets = _context.Tickets
             .Include(t => t.Users)
             .Include(t => t.AssignedToUser)
+            .OrderByDescending(t => t.created_at)
             .Where(t => t.status == status)
             .ToList();
 
@@ -100,6 +102,7 @@ namespace itTicketSystem.Controllers
             tickets = _context.Tickets
             .Include(t => t.Users)
             .Include(t => t.AssignedToUser)
+            .OrderByDescending(t => t.created_at)
             .ToList();
 
             }
