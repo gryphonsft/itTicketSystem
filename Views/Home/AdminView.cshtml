@@ -25,8 +25,6 @@
         style="gap: 25px; margin-top: 50px; align-items: flex-start; justify-content: space-between;">
 
 
-
-        <!-- Kartlar -->
         <div class="flex flex-col gap-4" style="margin-top: 90px; flex: 0 0 180px; min-width: 180px;">
 
 
@@ -58,7 +56,7 @@
             </div>
         </div>
 
-        <!-- Form -->
+
 
         <div class="p-3 bg-white rounded-2xl shadow-lg ml-3"
             style="flex: 1 1 320px; max-width: 400px; min-width: 300px;">
@@ -68,7 +66,7 @@
             <h2 class="text-2xl font-bold text-gray-800 mb-2">🎫 Yeni Ticket Oluştur</h2>
             <form method="post" asp-action="Create" asp-controller="Ticket" class="space-y-5">
 
-                <!-- Başlık -->
+
                 <div>
                     <label class="block text-gray-700 font-medium ">Ticket Başlığı</label>
                     <input type="text" name="Title" id="Title"
@@ -76,7 +74,7 @@
                         required />
                 </div>
 
-                <!-- Açıklama -->
+
                 <div>
                     <label class="block text-gray-700 font-medium">Açıklama</label>
                     <input type="text" id="Description" name="Description"
@@ -84,7 +82,7 @@
                         required />
                 </div>
 
-                <!-- Öncelik -->
+
                 <div>
                     <label class="block text-gray-700 font-medium ">Öncelik</label>
                     <select name="Priority"
@@ -97,7 +95,7 @@
                     </select>
                 </div>
 
-                <!-- Cihaz Seçimi -->
+
                 <div>
                     <label class="block text-gray-700 font-medium">Kategori</label>
                     <select id="Category" name="Category"
@@ -128,79 +126,66 @@
                     }
                 </div>
 
-                <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Oluştur</button>
+
+
+                <div class="pt-4">
+                    <button type="submit"
+                        class="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition duration-200 font-semibold">
+                        Ticket Oluştur
+                    </button>
                 </div>
+
             </form>
         </div>
 
-       
-    </div>
 
 
-    <!-- Tablo -->
-    <div class="bg-white bg-primary-subtle shadow p-3" style="flex: 2 1 600px; min-width: 600px;">
+        <div class="bg-white bg-primary-subtle shadow p-3" style="flex: 2 1 600px; min-width: 600px;">
 
 
-        <div class="row">
-            <div class="col-12">
-                <h1 class="text-center p-1 rounded">Ticket Listesi</h1>
-            </div>
-            <div class="col-12">
-                <div style="max-height: 500px; overflow-y: auto; border-radius: 10px;">
-                    <table class="table table-striped mb-0" style="font-size:12px;">
-                        <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
-                            <tr>
-                                <th>Id</th>
-                                <th>Başlık</th>
-                                <th>Açıklama</th>
-                                <th>Durum</th>
-                                <th>Öncelik</th>
-                                <th>Kategori</th>
-                                <th>Atanan</th>
-                                <th>Oluşturulma</th>
-                                <th>Kapanma</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var liste in Model)
-                            {
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center p-1 rounded">Ticket Listesi</h1>
+                </div>
+                <div class="col-12">
+                    <div style="max-height: 500px; overflow-y: auto; border-radius: 10px;">
+                        <table class="table table-striped mb-0" style="font-size:12px;">
+                            <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
                                 <tr>
-                                    <td>@liste.id</td>
-                                    <td>@liste.title</td>
-                                    <td>@liste.description</td>
-                                    <td>@liste.status</td>
-                                    <td>@liste.priority</td>
-                                    <td>@liste.category</td>
-                                    <td>@liste.AssignedToUser?.Username</td>
-                                    <td>@liste.created_at</td>
-                                    <td>@liste.closed_at</td>
+                                    <th>Id</th>
+                                    <th>Başlık</th>
+                                    <th>Açıklama</th>
+                                    <th>Durum</th>
+                                    <th>Öncelik</th>
+                                    <th>Kategori</th>
+                                    <th>Atanan</th>
+                                    <th>Oluşturulma</th>
+                                    <th>Kapanma</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var liste in Model)
+                                {
+                                    <tr>
+                                        <td>@liste.id</td>
+                                        <td>@liste.title</td>
+                                        <td>@liste.description</td>
+                                        <td>@liste.status</td>
+                                        <td>@liste.priority</td>
+                                        <td>@liste.category</td>
+                                        <td>@liste.AssignedToUser?.Username</td>
+                                        <td>@liste.created_at</td>
+                                        <td>@liste.closed_at</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <<<<<<< HEAD <!-- Info-Card -->
-        <div class="bg-white text-dark p-4 shadow rounded-lg d-flex flex-column justify-content-between"
-            style="max-width: 250px; height: 460px;">
-            <div>
-                <h5 class="fw-bold mb-2">Bilgilendirme</h5>
-                <p style="font-size: 20px;">
-                    Bu panel üzerinden yeni destek talepleri oluşturabilir, mevcut taleplerin durumlarını
-                    izleyebilirsiniz.
-                </p>
-            </div>
-            <div class="mt-auto">
-                <i class="fas fa-info-circle fa-2x"></i>
-            </div>
-        </div>
-        =======
 
         <div class="d-flex flex-column mr-2" style="gap: 10px; flex: 0 0 200px; min-width: 200px;">
-            >>>>>>> main
 
             <div class="bg-white text-dark text-lg p-2 shadow rounded-lg mt-3" style="max-height: 250px; ">
                 <div>
@@ -228,8 +213,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </div>
-<<<<<<< HEAD </div>
-    =======
-</div>
-    >>>>>>> main

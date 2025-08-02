@@ -63,11 +63,10 @@ namespace itTicketSystem.Controllers
                             Text = u.Username
                         })
                         .ToList();
-
-            ViewBag.AssignedUsers = assignedUsers;
-
+                        
             var tickets = _context.Tickets
             .Include(t => t.AssignedToUser)
+            .OrderByDescending(t => t.created_at)
             .ToList();
 
             //Hali hazırdaki session'ı yakalayıp viewbag olarak view sayfasına gönderme.
@@ -78,6 +77,7 @@ namespace itTicketSystem.Controllers
             ViewBag.Id = id;
             ViewBag.Role = rol;
             ViewBag.Username = username;
+            ViewBag.AssignedUsers = assignedUsers;
 
 
             return View("PersonelView", tickets);
